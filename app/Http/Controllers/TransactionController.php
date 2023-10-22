@@ -14,42 +14,16 @@ class TransactionController extends Controller
         return view('transactions.index');
     }
 
-    public function create()
+    public function show($id)
     {
-        return view('transactions.create');
-    }
+        $transaction = Transaction::find($id);
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|min:3',
-            'price' => 'required',
-            'quantity' => 'required',
-        ]);
-
-        $data = $validated;
-
-        try {
-            DB::beginTransaction();
-
-            Transaction::create($data);
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollback();
-
-            throw $th;
-        }
-
-        return redirect()->route('transactions.index')->with('message', [
-            'type' => 'success',
-            'text' => 'Berhasil menambahkan transaksi baru.'
-        ]);
+        return view('transactions.show', ['transaction' => $transaction]);
     }
 
     public function datatable()
     {
-        $query = Transaction::all();
+        $query = Transaction::with(['order', 'cashier']);
 
         $datatable = datatables($query);
 

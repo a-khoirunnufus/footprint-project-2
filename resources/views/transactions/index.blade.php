@@ -1,10 +1,10 @@
 @extends('layout', [
-    'breadcrumb_transactions' => [
-        ['text' => 'Data Transaksi', 'is_active' => true]
+    'breadcrumb_items' => [
+        ['text' => 'Riwayat Transaksi', 'is_active' => true]
     ]
 ])
 
-@section('title', 'Data Transaksi')
+@section('title', 'Riwayat Transaksi')
 
 @section('styles')
 <style>
@@ -78,16 +78,19 @@
             order: [[0, 'asc']],
             columns: [
                 { data: 'id', className: 'text-center' },
-                { data: 'name'},
+                { data: 'cashier.nama_pegawai'},
                 {
-                    data: 'price',
+                    data: 'created_at',
+                    render: (data) => {
+                        return moment(data).format('DD/MM/YYYY HH:mm:ss')
+                    }
+                },
+                {
+                    data: 'order.grand_total',
                     render: (data) => {
                         return Rupiah.format(data);
                     }
                 },
-                { data: 'quantity'},
-                { data: 'sold'},
-                { data: 'available'},
                 {
                     data: 'id',
                     orderable: false,
@@ -100,13 +103,8 @@
                                 </a>
                                 <ul class="dropdown-menu border">
                                     <li>
-                                        <a class="dropdown-item" href="${baseUrl}/transactions/${data}/edit">
-                                            <i class="fa fa-edit opacity-6 text-dark me-2"></i> Edit
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" onclick="doDelete('${baseUrl}/transactions/${data}/destroy')">
-                                            <i class="fa fa-trash opacity-6 text-dark me-2"></i> Hapus
+                                        <a class="dropdown-item" href="${baseUrl}/transactions/${data}">
+                                            <i class="fa fa-edit opacity-6 text-dark me-2"></i> Detail
                                         </a>
                                     </li>
                                 </ul>

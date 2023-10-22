@@ -23,4 +23,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
+
+    public function cashier()
+    {
+        return $this->belongsTo(Employee::class, 'cashier_id', 'id_pegawai');
+    }
 }

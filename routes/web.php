@@ -25,6 +25,10 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('employees/{id}', 'App\Http\Controllers\EmployeeController@update');
     Route::get('employees/{id}/edit', 'App\Http\Controllers\EmployeeController@edit')->name('employees.edit');
     Route::post('employees/{id}/destroy', 'App\Http\Controllers\EmployeeController@destroy');
+});
+
+Route::middleware(['auth:admin,employee'])->group(function () {
+    Route::get('profile', 'App\Http\Controllers\ProfileController@index')->name('profile');
 
     Route::get('items', 'App\Http\Controllers\ItemController@index')->name('items.index');
     Route::post('items', 'App\Http\Controllers\ItemController@store');
@@ -34,12 +38,10 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('items/{id}/edit', 'App\Http\Controllers\ItemController@edit')->name('items.edit');
     Route::post('items/{id}/destroy', 'App\Http\Controllers\ItemController@destroy');
 
-    Route::get('transactions', 'App\Http\Controllers\TransactionController@index')->name('transactions.index');
-    Route::post('transactions', 'App\Http\Controllers\TransactionController@store');
-    Route::get('transactions/create', 'App\Http\Controllers\TransactionController@create')->name('transactions.create');
-    Route::get('transactions/datatable', 'App\Http\Controllers\TransactionController@datatable');
-});
+    Route::post('/orders', 'App\Http\Controllers\OrderController@store');
+    Route::get('/orders/create', 'App\Http\Controllers\OrderController@create')->name('orders.create');
 
-Route::middleware(['auth:admin,employee'])->group(function () {
-    Route::get('profile', 'App\Http\Controllers\ProfileController@index')->name('profile');
+    Route::get('transactions', 'App\Http\Controllers\TransactionController@index')->name('transactions.index');
+    Route::get('transactions/datatable', 'App\Http\Controllers\TransactionController@datatable');
+    Route::get('transactions/{id}', 'App\Http\Controllers\TransactionController@show')->name('transactions.show');
 });

@@ -21,4 +21,9 @@ class OrderItem extends Model
         'discount',
         'quantity',
     ];
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id', 'id');
+    }
 }
