@@ -6,21 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Transaction extends Model
+class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'transactions';
+    protected $table = 'orders';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'order_id',
-        'cashier_id',
+        'customer_name',
+        'status',
+        'sub_total',
+        'item_discount',
+        'grand_total',
     ];
 
-    public function order()
+    public function orderItem()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
 }

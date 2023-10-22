@@ -33,6 +33,11 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('items/{id}', 'App\Http\Controllers\ItemController@update');
     Route::get('items/{id}/edit', 'App\Http\Controllers\ItemController@edit')->name('items.edit');
     Route::post('items/{id}/destroy', 'App\Http\Controllers\ItemController@destroy');
+
+    Route::get('transactions', 'App\Http\Controllers\TransactionController@index')->name('transactions.index');
+    Route::post('transactions', 'App\Http\Controllers\TransactionController@store');
+    Route::get('transactions/create', 'App\Http\Controllers\TransactionController@create')->name('transactions.create');
+    Route::get('transactions/datatable', 'App\Http\Controllers\TransactionController@datatable');
 });
 
 Route::middleware(['auth:admin,employee'])->group(function () {

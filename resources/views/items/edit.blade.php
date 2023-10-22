@@ -28,12 +28,21 @@
                     </div>
                 @enderror
             </div>
-            <div class="input-group input-group-outline my-3 {{ $item->price ? 'is-filled' : '' }}">
-                <label class="form-label">Harga Barang</label>
-                <input name="price" class="form-control" type="number" min="1" step="0.01" value="{{ $item->price }}">
-                @if($errors->default->has('price'))
+            <div class="input-group input-group-outline my-3 {{ $item->sell_price ? 'is-filled' : '' }}">
+                <label class="form-label">Harga Jual Barang</label>
+                <input name="sell_price" class="form-control" type="number" min="1" step="0.01" value="{{ $item->sell_price }}">
+                @if($errors->default->has('sell_price'))
                     <div class="invalid-feedback d-block">
-                        {{ $errors->default->first('price') }}
+                        {{ $errors->default->first('sell_price') }}
+                    </div>
+                @enderror
+            </div>
+            <div class="input-group input-group-outline my-3 {{ $item->available ? 'is-filled' : '' }}">
+                <label class="form-label">Jumlah Barang Tersedia</label>
+                <input name="available" class="form-control" type="number" min="1" step="0.01" value="{{ $item->available }}">
+                @if($errors->default->has('available'))
+                    <div class="invalid-feedback d-block">
+                        {{ $errors->default->first('available') }}
                     </div>
                 @enderror
             </div>

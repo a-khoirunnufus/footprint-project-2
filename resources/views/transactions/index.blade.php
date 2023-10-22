@@ -1,10 +1,10 @@
 @extends('layout', [
-    'breadcrumb_items' => [
-        ['text' => 'Data Barang', 'is_active' => true]
+    'breadcrumb_transactions' => [
+        ['text' => 'Data Transaksi', 'is_active' => true]
     ]
 ])
 
-@section('title', 'Data Barang')
+@section('title', 'Data Transaksi')
 
 @section('styles')
 <style>
@@ -47,23 +47,17 @@
 @section('content')
 <div class="card">
     <div class="card-header border-bottom">
-        <div class="d-flex align-items-center">
-            <h6 class="opacity-8 mb-0 flex-grow-1">Data Barang</h6>
-            <a href="{{ route('items.create') }}" role="button" class="btn btn-primary btn-sm mb-0">
-                <i class="fa fa-plus text-white me-2"></i> Tambah Data
-            </a>
+        <div class="d-flex align-transactions-center">
+            <h6 class="opacity-8 mb-0 flex-grow-1">Data Transaksi</h6>
         </div>
     </div>
-    <table id="table-item" class="table">
+    <table id="table-transaction" class="table">
         <thead>
             <tr>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2 text-center">No</th>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Nama Barang</th>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Harga Beli Barang</th>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Harga Jual Barang</th>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Jumlah Awal</th>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Jumlah Terjual</th>
-                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Jumlah Tersedia</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2 text-center">Id Transaksi</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Nama Kasir</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Waktu Transaksi</th>
+                <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">Total Harga</th>
                 <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2 text-center">Aksi</th>
             </tr>
         </thead>
@@ -75,24 +69,18 @@
 @section('scripts')
 <script>
     $(function(){
-        $('#table-item').DataTable({
+        $('#table-transaction').DataTable({
             serverSide: true,
             processing: true,
             ajax: {
-                url: baseUrl + '/items/datatable',
+                url: baseUrl + '/transactions/datatable',
             },
             order: [[0, 'asc']],
             columns: [
                 { data: 'id', className: 'text-center' },
                 { data: 'name'},
                 {
-                    data: 'buy_price',
-                    render: (data) => {
-                        return Rupiah.format(data);
-                    }
-                },
-                {
-                    data: 'sell_price',
+                    data: 'price',
                     render: (data) => {
                         return Rupiah.format(data);
                     }
@@ -112,12 +100,12 @@
                                 </a>
                                 <ul class="dropdown-menu border">
                                     <li>
-                                        <a class="dropdown-item" href="${baseUrl}/items/${data}/edit">
+                                        <a class="dropdown-item" href="${baseUrl}/transactions/${data}/edit">
                                             <i class="fa fa-edit opacity-6 text-dark me-2"></i> Edit
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" onclick="doDelete('${baseUrl}/items/${data}/destroy')">
+                                        <a class="dropdown-item" onclick="doDelete('${baseUrl}/transactions/${data}/destroy')">
                                             <i class="fa fa-trash opacity-6 text-dark me-2"></i> Hapus
                                         </a>
                                     </li>
@@ -141,7 +129,7 @@
                 zeroRecords: "Tidak ditemukan data yang cocok"
             },
             dom: `
-                <"d-flex justify-content-between align-items-center px-3 pt-3 pb-2" <l> <f> >
+                <"d-flex justify-content-between align-transactions-center px-3 pt-3 pb-2" <l> <f> >
                 tr
                 <"d-flex justify-content-between px-3 pt-2 pb-3" <i> <p> >
             `,

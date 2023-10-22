@@ -23,11 +23,13 @@ class ItemController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|min:3',
-            'price' => 'required',
+            'buy_price' => 'required',
+            'sell_price' => 'required',
             'quantity' => 'required',
         ]);
 
         $data = $validated;
+        $data['available'] = $validated['quantity'];
 
         try {
             DB::beginTransaction();
@@ -68,7 +70,8 @@ class ItemController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|min:3',
-            'price' => 'required',
+            'sell_price' => 'required',
+            'available' => 'required',
         ]);
 
         $data = $validated;

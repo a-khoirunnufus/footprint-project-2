@@ -6,20 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item extends Model
+class OrderItem extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'items';
+    protected $table = 'order_items';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name',
-        'buy_price',
-        'sell_price',
+        'item_id',
+        'order_id',
+        'price',
+        'discount',
         'quantity',
-        'sold',
-        'available',
     ];
 }
