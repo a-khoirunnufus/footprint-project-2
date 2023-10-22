@@ -25,17 +25,16 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('employees/{id}', 'App\Http\Controllers\EmployeeController@update');
     Route::get('employees/{id}/edit', 'App\Http\Controllers\EmployeeController@edit')->name('employees.edit');
     Route::post('employees/{id}/destroy', 'App\Http\Controllers\EmployeeController@destroy');
+
+    Route::get('items', 'App\Http\Controllers\ItemController@index')->name('items.index');
+    Route::post('items', 'App\Http\Controllers\ItemController@store');
+    Route::get('items/create', 'App\Http\Controllers\ItemController@create')->name('items.create');
+    Route::get('items/datatable', 'App\Http\Controllers\ItemController@datatable');
+    Route::post('items/{id}', 'App\Http\Controllers\ItemController@update');
+    Route::get('items/{id}/edit', 'App\Http\Controllers\ItemController@edit')->name('items.edit');
+    Route::post('items/{id}/destroy', 'App\Http\Controllers\ItemController@destroy');
 });
 
 Route::middleware(['auth:admin,employee'])->group(function () {
     Route::get('profile', 'App\Http\Controllers\ProfileController@index')->name('profile');
-});
-
-
-Route::get('is-login-admin', function() {
-    dd(\Auth::guard('admin')->user());
-});
-
-Route::get('is-login-employee', function() {
-    dd(\Auth::guard('employee')->user());
 });
